@@ -7,6 +7,7 @@ import { z } from "zod";
 import { formSchema } from "@/lib/schemas";
 import PersonalInfoStep from "./components/PersonalInfoStep";
 import AddressStep from "./components/AddressStep";
+import AccountStep from "./components/AccountStep";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -149,9 +150,11 @@ export default function MultiStepForm() {
             />
             )}
             {step === 3 && (
-              <div>
-                <h2 className="text-yellow-500 border border-green-500 p-2 text-center font-bold">AccountStep</h2>
-              </div>
+              < AccountStep
+              register={register}
+              errors={errors}
+              darkMode={darkMode}
+            />
             )}
             {step === 4 && (
               <div>
