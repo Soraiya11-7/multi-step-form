@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { formSchema } from "@/lib/schemas";
 import PersonalInfoStep from "./components/PersonalInfoStep";
+import AddressStep from "./components/AddressStep";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -141,9 +142,11 @@ export default function MultiStepForm() {
               />
             )}
             {step === 2 && (
-              <div>
-                <h2 className="text-yellow-500 border border-green-500 p-2 text-center font-bold">AddressStep</h2>
-              </div>
+              <AddressStep
+              register={register}
+              errors={errors}
+              darkMode={darkMode}
+            />
             )}
             {step === 3 && (
               <div>
