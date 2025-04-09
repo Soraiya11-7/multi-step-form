@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { formSchema } from "@/lib/schemas";
+import PersonalInfoStep from "./components/PersonalInfoStep";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -13,9 +14,13 @@ export default function MultiStepForm() {
   const [darkMode, setDarkMode] = useState(false);
 
   const { 
+    register,
+    formState: { errors },
     handleSubmit, 
+    trigger,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    mode: "onChange", // Validate on change
     defaultValues: {
       personalInfo: {
         fullName: "",
@@ -39,8 +44,44 @@ export default function MultiStepForm() {
     console.log("Form submitted:", data);
   };
 
-  const nextStep = () => setStep(step + 1);
+  const nextStep = async () => {
+
+    // Validate current step fields...
+    let isValid = false;
+    
+    if (step === 1) isValid = await trigger("personalInfo");
+    else if (step === 2) isValid = await trigger("address");
+    else if (step === 3) isValid = await trigger("account");
+    else isValid = true; // For review
+    
+    if (isValid) setStep(step + 1);
+  };
+
   const prevStep = () => setStep(step - 1);
+
+  // Check if current step is valid...
+  const isStepValid = () => {
+    if (step === 1) {
+      return (
+        !errors.personalInfo?.fullName &&
+        !errors.personalInfo?.email &&
+        !errors.personalInfo?.phone
+      );
+    } else if (step === 2) {
+      return (
+        !errors.address?.street &&
+        !errors.address?.city &&
+        !errors.address?.zipCode
+      );
+    } else if (step === 3) {
+      return (
+        !errors.account?.username &&
+        !errors.account?.password &&
+        !errors.account?.confirmPassword
+      );
+    }
+    return true;
+  };
 
   return (
     <div className={`min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"}`}>
@@ -55,7 +96,7 @@ export default function MultiStepForm() {
           </button>
         </div>
 
-        {/* Welcome Message Section */}
+        {/* Welcome Message Section... */}
         <div className={`mb-8 p-4 rounded-lg text-center ${darkMode ? "bg-gray-800" : "bg-white"} shadow-md`}>
           <h2 className="text-xl font-semibold mb-2">Welcome to Our Form!</h2>
           <p className={`${darkMode ? "text-gray-300" : "text-gray-600"}`}>
@@ -93,9 +134,11 @@ export default function MultiStepForm() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {step === 1 && (
-              <div>
-                <h2 className="text-yellow-500 border border-green-500 p-2 text-center font-bold ">PersonalInfoStep</h2>
-              </div>
+              <PersonalInfoStep
+                register={register}
+                errors={errors}
+                darkMode={darkMode}
+              />
             )}
             {step === 2 && (
               <div>
@@ -121,7 +164,7 @@ export default function MultiStepForm() {
                   className={`px-4 py-2 rounded-md ${
                     darkMode
                       ? "bg-gray-700 hover:bg-gray-600"
-                      : "bg-gray-200 hover:bg-gray-300"
+                      : "bg-gray-300 hover:bg-gray-400"
                   }`}
                 >
                   Previous
@@ -131,10 +174,15 @@ export default function MultiStepForm() {
                 <button
                   type="button"
                   onClick={nextStep}
+                  disabled={!isStepValid()}
                   className={`px-4 py-2 rounded-md ${
                     darkMode
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "bg-blue-500 hover:bg-blue-600"
+                      ? isStepValid() 
+                        ? "bg-blue-600 hover:bg-blue-700" 
+                        : "bg-blue-400 cursor-not-allowed"
+                      : isStepValid()
+                      ? "bg-blue-500 hover:bg-blue-600"
+                      : "bg-blue-300 cursor-not-allowed"
                   } text-white`}
                 >
                   Next
