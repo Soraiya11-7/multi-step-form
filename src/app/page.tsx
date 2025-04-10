@@ -9,6 +9,10 @@ import PersonalInfoStep from "./components/PersonalInfoStep";
 import AddressStep from "./components/AddressStep";
 import AccountStep from "./components/AccountStep";
 import ReviewStep from "./components/ReviewStep";
+import { FaUser } from "react-icons/fa";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { MdOutlineAccountCircle } from "react-icons/md";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -16,6 +20,15 @@ export default function MultiStepForm() {
   const [step, setStep] = useState(1);
   const [darkMode, setDarkMode] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const icons = [
+    FaUser,
+    HiOutlineLocationMarker,
+    MdOutlineAccountCircle,
+    AiOutlineCheckCircle,
+  ];
+
+  const labels = ["Personal", "Address", "Account", "Review"];
 
   const {
     register,
@@ -133,31 +146,41 @@ export default function MultiStepForm() {
             </div>
 
             <div className="max-w-md mx-auto">
-              <div className="flex justify-between mb-8">
-                {[1, 2, 3, 4].map((stepNumber) => (
-                  <div key={stepNumber} className="flex flex-col items-center">
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        step === stepNumber
-                          ? "bg-blue-600 text-white"
-                          : step > stepNumber
-                          ? "bg-green-500 text-white"
-                          : darkMode
-                          ? "bg-gray-700 text-white"
-                          : "bg-gray-200 text-gray-800"
-                      }`}
-                    >
-                      {stepNumber}
+
+
+              <div className="flex justify-between mb-8 relative">
+
+                <div className="absolute left-0 right-0 top-5 h-1 bg-gray-200 dark:bg-gray-700 z-0"></div>
+
+
+                <div
+                  className="absolute left-0 top-5 h-1 bg-green-500 z-0"
+                  style={{ width: `${((step - 1) / 3) * 100}%` }}
+                ></div>
+
+                {[0, 1, 2, 3].map((index) => {
+                  const Icon = icons[index];
+                  return (
+                    <div key={`step-${index}`} className="flex flex-col items-center z-10">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center ${step === index + 1
+                            ? "bg-blue-600 text-white"
+                            : step > index + 1
+                              ? "bg-green-500 text-white"
+                              : darkMode
+                                ? "bg-gray-700 text-white"
+                                : "bg-gray-200 text-gray-800"
+                          }`}
+                      >
+                        <Icon className="text-xl" />
+                      </div>
+                      <span className="text-sm my-2">{labels[index]}</span>
                     </div>
-                    <span className="text-sm my-2">
-                      {stepNumber === 1 && "Personal"}
-                      {stepNumber === 2 && "Address"}
-                      {stepNumber === 3 && "Account"}
-                      {stepNumber === 4 && "Review"}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
+
+
 
               <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
                 {step === 1 && <PersonalInfoStep register={register} errors={errors} darkMode={darkMode} />}
@@ -170,11 +193,10 @@ export default function MultiStepForm() {
                     <button
                       type="button"
                       onClick={prevStep}
-                      className={`px-4 py-2 rounded-md ${
-                        darkMode
+                      className={`px-4 py-2 rounded-md ${darkMode
                           ? "bg-gray-700 hover:bg-gray-600"
                           : "bg-gray-300 hover:bg-gray-400"
-                      }`}
+                        }`}
                     >
                       Previous
                     </button>
@@ -185,15 +207,14 @@ export default function MultiStepForm() {
                       type="button"
                       onClick={nextStep}
                       disabled={!isStepValid()}
-                      className={`px-4 py-2 rounded-md ${
-                        darkMode
+                      className={`px-4 py-2 rounded-md ${darkMode
                           ? isStepValid()
                             ? "bg-blue-600 hover:bg-blue-700"
                             : "bg-blue-400 cursor-not-allowed"
                           : isStepValid()
-                          ? "bg-blue-500 hover:bg-blue-600"
-                          : "bg-blue-300 cursor-not-allowed"
-                      } text-white`}
+                            ? "bg-blue-500 hover:bg-blue-600"
+                            : "bg-blue-300 cursor-not-allowed"
+                        } text-white`}
                     >
                       Next
                     </button>
@@ -201,11 +222,10 @@ export default function MultiStepForm() {
                     <button
                       type="button"
                       onClick={handleSubmit(onSubmit)}
-                      className={`px-4 py-2 rounded-md ${
-                        darkMode
+                      className={`px-4 py-2 rounded-md ${darkMode
                           ? "bg-green-600 hover:bg-green-700"
                           : "bg-green-500 hover:bg-green-600"
-                      } text-white`}
+                        } text-white`}
                     >
                       Submit
                     </button>
