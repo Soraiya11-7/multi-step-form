@@ -8,24 +8,30 @@ type FormData = z.infer<typeof formSchema>;
 interface AccountStepProps {
   register: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
-  darkMode: boolean;
 }
 
-const AccountStep: React.FC<AccountStepProps> = ({register, errors, darkMode}) => {
+const AccountStep: React.FC<AccountStepProps> = ({ register, errors }) => {
   return (
-    <div className={`p-6 rounded-lg ${darkMode ? "bg-gray-800" : "bg-white"} shadow-md`}>
-      <h2 className="text-xl font-semibold mb-4">Account Setup</h2>
-      <div className="space-y-4">
-        <div>
-          <label className="block mb-1">Username</label>
-          <input
-            {...register("account.username")}
-            className={`w-full p-2 border rounded-md ${
-              darkMode
-                ? "bg-gray-700 border-gray-600"
-                : "bg-white border-gray-300"
-            } ${errors.account?.username ? "border-red-500" : ""}`}
-          />
+    <div className={`p-6 rounded-lg dark:bg-gray-800 bg-white shadow-md`}>
+      <h2 className="text-xl font-semibold mb-6">Account Setup</h2>
+      
+      <div className="space-y-6">
+        {/* Username Field ..............*/}
+        <div className="relative">
+          <div className={`relative border-2 rounded-lg p-1 transition-colors ${
+            errors.account?.username
+              ? 'border-red-500'
+              :'border-gray-300 focus-within:border-purple-500 dark:border-gray-600 dark:focus-within:border-purple-500'
+          }`}>
+            <label className="absolute -top-3 left-3 px-1 text-sm text-purple-700 bg-white dark:bg-gray-800 z-10">
+              Username
+            </label>
+            <input
+              {...register("account.username")}
+             className={`w-full px-2 py-1 bg-transparent focus:outline-none dark:text-white  text-gray-800`}
+              placeholder="johndoe123"
+            />
+          </div>
           {errors.account?.username && (
             <p className="text-red-500 text-sm mt-1">
               {errors.account.username.message}
@@ -33,17 +39,23 @@ const AccountStep: React.FC<AccountStepProps> = ({register, errors, darkMode}) =
           )}
         </div>
 
-        <div>
-          <label className="block mb-1">Password</label>
-          <input
-            type="password"
-            {...register("account.password")}
-            className={`w-full p-2 border rounded-md ${
-              darkMode
-                ? "bg-gray-700 border-gray-600"
-                : "bg-white border-gray-300"
-            } ${errors.account?.password ? "border-red-500" : ""}`}
-          />
+        {/* Password Field............. */}
+        <div className="relative">
+          <div className={`relative border-2 rounded-lg p-1 transition-colors ${
+            errors.account?.password
+              ? 'border-red-500'
+              :'border-gray-300 focus-within:border-purple-500 dark:border-gray-600 dark:focus-within:border-purple-500'
+          }`}>
+            <label className="absolute -top-3 left-3 px-1 text-sm text-purple-700 bg-white dark:bg-gray-800 z-10">
+              Password
+            </label>
+            <input
+              type="password"
+              {...register("account.password")}
+             className={`w-full px-2 py-1 bg-transparent focus:outline-none dark:text-white  text-gray-800`}
+              placeholder="••••••••"
+            />
+          </div>
           {errors.account?.password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.account.password.message}
@@ -51,17 +63,23 @@ const AccountStep: React.FC<AccountStepProps> = ({register, errors, darkMode}) =
           )}
         </div>
 
-        <div>
-          <label className="block mb-1">Confirm Password</label>
-          <input
-            type="password"
-            {...register("account.confirmPassword")}
-            className={`w-full p-2 border rounded-md ${
-              darkMode
-                ? "bg-gray-700 border-gray-600"
-                : "bg-white border-gray-300"
-            } ${errors.account?.confirmPassword ? "border-red-500" : ""}`}
-          />
+        {/* Confirm Password Field......... */}
+        <div className="relative">
+          <div className={`relative border-2 rounded-lg p-1 transition-colors ${
+            errors.account?.confirmPassword
+              ? 'border-red-500'
+              :'border-gray-300 focus-within:border-purple-500 dark:border-gray-600 dark:focus-within:border-purple-500'
+          }`}>
+            <label className="absolute -top-3 left-3 px-1 text-sm text-purple-700 bg-white dark:bg-gray-800 z-10">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              {...register("account.confirmPassword")}
+             className={`w-full px-2 py-1 bg-transparent focus:outline-none dark:text-white  text-gray-800`}
+              placeholder="••••••••"
+            />
+          </div>
           {errors.account?.confirmPassword && (
             <p className="text-red-500 text-sm mt-1">
               {errors.account.confirmPassword.message}

@@ -11,20 +11,24 @@ import AccountStep from "./components/AccountStep";
 import ReviewStep from "./components/ReviewStep";
 import { FaUser } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { MdOutlineAccountCircle } from "react-icons/md";
+import { MdLockOutline } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import WelcomeModal from "./components/WelcomeModal";
+import InfoBanner from "./components/InfoBanner";
+import Navbar from "./components/Navbar";
 
 type FormData = z.infer<typeof formSchema>;
 
 export default function MultiStepForm() {
   const [step, setStep] = useState(1);
-  const [darkMode, setDarkMode] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+
 
   const icons = [
     FaUser,
     HiOutlineLocationMarker,
-    MdOutlineAccountCircle,
+    MdLockOutline,
     AiOutlineCheckCircle,
   ];
 
@@ -111,50 +115,36 @@ export default function MultiStepForm() {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"}`}>
+    <div className={`min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white`}>
+       {showWelcomeModal && (
+        <WelcomeModal
+          onClose={() => setShowWelcomeModal(false)} 
+        />
+      )}
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Multi-Step Form</h1>
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`px-4 py-2 rounded-md ${darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-800"}`}
-          >
-            {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
-          </button>
-        </div>
+      <Navbar  />
 
         {showSuccess ? (
-          <div className={`max-w-md mx-auto p-6 rounded-lg ${darkMode ? "bg-gray-800" : "bg-white"} shadow-md text-center`}>
+          <div className={`max-w-md mx-auto p-6 rounded-lg dark:bg-gray-800 bg-white shadow-md text-center`}>
             <div className="text-green-500 text-5xl mb-4">✓</div>
             <h2 className="text-2xl font-bold mb-2">Submission Successful!</h2>
             <p className="mb-4">Thank you for completing the form.</p>
             <button
               onClick={startNewForm}
-              className={`px-4 py-2 rounded-md ${darkMode ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-500 hover:bg-blue-600"} text-white`}
+              className={`px-4 py-2 rounded-md dark:bg-purple-600 dark:hover:bg-purple-700 bg-purple-500 hover:bg-purple-600 text-white`}
             >
               Start New Form
             </button>
           </div>
         ) : (
           <>
-            <div className={`mb-8 p-4 rounded-lg text-center ${darkMode ? "bg-gray-800" : "bg-white"} shadow-md`}>
-              <h2 className="text-xl font-semibold mb-2">Welcome to Our Form!</h2>
-              <p className={`${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-                Please complete all steps to submit your information.
-                This should take less than 2 minutes.
-              </p>
-            </div>
+           <InfoBanner/>
 
             <div className="max-w-md mx-auto">
-
-
               <div className="flex justify-between mb-8 relative">
-
                 <div className="absolute left-0 right-0 top-5 h-1 bg-gray-200 dark:bg-gray-700 z-0"></div>
-
-
                 <div
-                  className="absolute left-0 top-5 h-1 bg-green-500 z-0"
+                  className="absolute left-0 top-5 h-1 bg-purple-500 z-0"
                   style={{ width: `${((step - 1) / 3) * 100}%` }}
                 ></div>
 
@@ -164,12 +154,10 @@ export default function MultiStepForm() {
                     <div key={`step-${index}`} className="flex flex-col items-center z-10">
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center ${step === index + 1
-                            ? "bg-blue-600 text-white"
-                            : step > index + 1
-                              ? "bg-green-500 text-white"
-                              : darkMode
-                                ? "bg-gray-700 text-white"
-                                : "bg-gray-200 text-gray-800"
+                          ? "bg-purple-600 text-white"
+                          : step > index + 1
+                            ? "bg-purple-500 text-white"
+                            : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-white"
                           }`}
                       >
                         <Icon className="text-xl" />
@@ -183,23 +171,24 @@ export default function MultiStepForm() {
 
 
               <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
-                {step === 1 && <PersonalInfoStep register={register} errors={errors} darkMode={darkMode} />}
-                {step === 2 && <AddressStep register={register} errors={errors} darkMode={darkMode} />}
-                {step === 3 && <AccountStep register={register} errors={errors} darkMode={darkMode} />}
-                {step === 4 && <ReviewStep watch={watch} darkMode={darkMode} />}
+                {step === 1 && <PersonalInfoStep register={register} errors={errors}  />}
+                {step === 2 && <AddressStep register={register} errors={errors}  />}
+                {step === 3 && <AccountStep register={register} errors={errors}  />}
+                {step === 4 && <ReviewStep watch={watch}  />}
 
                 <div className="flex justify-between">
-                  {step > 1 && (
+                  {step > 1 ? (
                     <button
                       type="button"
                       onClick={prevStep}
-                      className={`px-4 py-2 rounded-md ${darkMode
-                          ? "bg-gray-700 hover:bg-gray-600"
-                          : "bg-gray-300 hover:bg-gray-400"
-                        }`}
+                      className={`px-4 py-2 rounded-md dark:bg-gray-700 dark:hover:bg-gray-600
+                          bg-gray-300 hover:bg-gray-400
+                        `}
                     >
                       Previous
                     </button>
+                  ) : (
+                    <div></div>
                   )}
 
                   {step < 4 ? (
@@ -207,14 +196,11 @@ export default function MultiStepForm() {
                       type="button"
                       onClick={nextStep}
                       disabled={!isStepValid()}
-                      className={`px-4 py-2 rounded-md ${darkMode
-                          ? isStepValid()
-                            ? "bg-blue-600 hover:bg-blue-700"
-                            : "bg-blue-400 cursor-not-allowed"
-                          : isStepValid()
-                            ? "bg-blue-500 hover:bg-blue-600"
-                            : "bg-blue-300 cursor-not-allowed"
-                        } text-white`}
+                      className={`px-4 py-2 rounded-md text-white ${
+                        isStepValid()
+                          ? "bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700"
+                          : "bg-purple-300 cursor-not-allowed dark:bg-purple-400"
+                      }`}
                     >
                       Next
                     </button>
@@ -222,10 +208,8 @@ export default function MultiStepForm() {
                     <button
                       type="button"
                       onClick={handleSubmit(onSubmit)}
-                      className={`px-4 py-2 rounded-md ${darkMode
-                          ? "bg-green-600 hover:bg-green-700"
-                          : "bg-green-500 hover:bg-green-600"
-                        } text-white`}
+                      className={`px-4 py-2 rounded-md dark:bg-green-600 dark:hover:bg-green-700 bg-green-500 hover:bg-green-600
+                       text-white`}
                     >
                       Submit
                     </button>
