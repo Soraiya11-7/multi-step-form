@@ -23,20 +23,20 @@ export default function ThemeToggle() {
   return (
     <div
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className={`w-20 h-10 flex items-center rounded-full p-1 cursor-pointer transition-all duration-500 shadow-inner
-        dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-600
-        bg-gradient-to-r from-purple-800 to-purple-700
+      className={`w-14 h-7 md:w-20 md:h-10 flex items-center rounded-full p-1 cursor-pointer transition-all duration-500 shadow-inner
+        dark:bg-gradient-to-r dark:from-gray-500 dark:to-gray-600
+        bg-gradient-to-r from-purple-800 to-purple-700  overflow-hidden
       `}
     >
       <div
-        className={`w-8 h-8 rounded-full shadow-lg transform transition-all duration-500 flex items-center justify-center text-white text-sm
-          ${theme === "dark" ? "translate-x-10 bg-gray-900" : "translate-x-0 bg-white text-purple-900"}
+        className={`w-5 h-5 md:w-8 md:h-8 rounded-full shadow-lg transform transition-all duration-500 flex items-center justify-center text-white text-sm
+          ${theme === "dark" ? "translate-x-7 md:translate-x-10 bg-gray-900" : "translate-x-0 bg-white text-purple-900"}
         `}
       >
         {theme === "dark" ? (
-          <FaMoon className="text-lg text-yellow-500" />
+          <FaMoon className="text-sm md:text-lg text-yellow-500" />
         ) : (
-          <FaSun className="text-lg text-yellow-500" />
+          <FaSun className="text-sm md:text-lg text-yellow-500" />
         )}
       </div>
     </div>

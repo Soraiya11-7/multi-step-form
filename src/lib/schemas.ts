@@ -3,7 +3,7 @@ import { z } from "zod";
 export const personalInfoSchema = z.object({
   fullName: z.string().min(1, "Full Name is required"),
   email: z.string().email("Invalid Email address"),
-  phone: z.string().min(10, "Phone Number must be at least 10 digits"),
+  phone: z.string().min(10, "Phone Number must be at least 10 digits").max(15, "Phone Number can't be more than 15 digits"),
 });
 
 export const addressSchema = z.object({
