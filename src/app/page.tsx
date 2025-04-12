@@ -16,6 +16,7 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import WelcomeModal from "./components/modals/WelcomeModal";
 import InfoBanner from "./components/modals/InfoBanner";
 
+
 type FormData = z.infer<typeof formSchema>;
 
 export default function MultiStepForm() {
@@ -114,7 +115,7 @@ export default function MultiStepForm() {
   };
 
   return (
-    <div className=" text-gray-900 dark:bg-gray-900 dark:text-white">
+    <div className=" text-gray-900  dark:text-white">
       <div className="container w-[90%] mx-auto ">
         {showWelcomeModal && (
           <WelcomeModal
@@ -125,13 +126,13 @@ export default function MultiStepForm() {
 
           {/*   Success message...............*/}
           {showSuccess ? (
-            <div className={`max-w-sm md:max-w-md mx-auto p-6 rounded-lg bg-purple-500 dark:bg-white shadow-md mt-10 text-center transition-all duration-300 hover:shadow-2xl hover:scale-[1.05] hover:border-2 hover:border-white  dark:hover:border-purple-400`}>
-              <div className="dark:text-green-500 text-white font-extrabold text-4xl md:text-5xl mb-4">✓</div>
-              <h2 className="text-2xl font-bold mb-2 text-white dark:text-black"><span className="hidden sm:inline-block">Submission</span> Successful!</h2>
-              <p className="mb-4 text-white dark:text-black text-sm md:text-base">Thank you for completing the form.</p>
+            <div className={`max-w-sm md:max-w-md mx-auto p-6 rounded-lg bg-white shadow-md mt-10 lg:mt-20 text-center transition-all duration-300 hover:shadow-2xl hover:scale-[1.05] hover:border-2 hover:border-white  dark:hover:border-purple-400`}>
+              <div className="text-green-500  font-extrabold text-4xl md:text-5xl mb-4">✓</div>
+              <h2 className="text-2xl font-bold mb-2 text-black"><span className="hidden sm:inline-block">Submission</span> Successful!</h2>
+              <p className="mb-4 text-black text-sm md:text-base">Thank you for completing the form.</p>
               <button
                 onClick={startNewForm}
-                className={`px-2 py-1 md:px-4 md:py-2 rounded-md bg-white hover:bg-gray-200 text-purple-700 dark:text-white dark:bg-purple-500 dark:hover:bg-purple-600 `}
+                className={`px-2 py-1 md:px-4 md:py-2 rounded-md bg-purple-500 text-white  hover:bg-purple-600 `}
               >
                 Start New Form
               </button>
@@ -202,8 +203,8 @@ export default function MultiStepForm() {
                         onClick={nextStep}
                         disabled={!isStepValid()}
                         className={`px-2 py-1 md:px-4 md:py-2 rounded-md text-white ${isStepValid()
-                            ? "bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700"
-                            : "bg-purple-300 cursor-not-allowed dark:bg-purple-400"
+                            ? "bg-purple-600 hover:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-700"
+                            : "bg-gray-500  cursor-not-allowed dark:bg-purple-400"
                           }`}
                       >
                         Next
@@ -212,7 +213,7 @@ export default function MultiStepForm() {
                       <button
                         type="button"
                         onClick={handleSubmit(onSubmit)}
-                        className={`px-2 py-1 md:px-4 md:py-2 rounded-md dark:bg-purple-600 dark:hover:bg-purple-700 bg-purple-500 hover:bg-purple-600
+                        className={`px-2 py-1 md:px-4 md:py-2 rounded-md dark:bg-purple-600 dark:hover:bg-purple-700 bg-purple-600 hover:bg-purple-700
                        text-white`}
                       >
                         Submit

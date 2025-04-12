@@ -18,23 +18,29 @@ export const metadata: Metadata = {
   title: "FormFlow App",
   description:
     "A multi-step form application built with Next.js, React Hook Form, Tailwind CSS, and Zod for validation.",
+  icons: {
+      icon: "/favicon.png"
+    }
 };
 
 
 export default function RootLayout({ children,}: Readonly<{children: React.ReactNode;}>) {
   return (
     <html lang="en" suppressHydrationWarning>
-    <body className={`${geistSans.variable} ${geistMono.variable}  antialiased overflow-x-hidden bg-white dark:bg-gray-900 text-[#37352f] dark:text-[#ffffffcf] `}>
+    <body className={`${geistSans.variable} ${geistMono.variable}  antialiased overflow-x-hidden min-h-screen  
+  bg-[url('/images/light-img.jpg')] 
+    bg-cover bg-center bg-no-repeat text-[#37352f] dark:text-[#ffffffcf] `}>
+        <div className="absolute inset-0 bg-black/0 dark:bg-black/90 z-0"></div>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
       >
+        <div className="relative z-10">
         <Navbar />
-        <div className="">
-        {children}
-        </div>
+        <div>{children}</div>
+      </div>
       </ThemeProvider>
     </body>
   </html>

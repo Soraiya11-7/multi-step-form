@@ -12,7 +12,7 @@ interface PersonalInfoStepProps {
 
 const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ register, errors }) => {
   return (
-    <div className={` p-4 md:p-6 rounded-lg dark:bg-gray-800 bg-white shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] hover:border hover:border-purple-400`}>
+    <div className={` p-4 md:p-6 py-6 rounded-lg dark:bg-gray-800 bg-white shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] hover:border hover:border-purple-400`}>
       <h2 className="text-lg md:text-xl font-semibold mb-6">Personal Information</h2>
       
       <div className="space-y-4 md:space-y-6">
