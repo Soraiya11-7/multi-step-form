@@ -3,6 +3,8 @@
 
 A front-end project built using **Next.js** and **React** that showcases a responsive, multi-step form with step-wise validation using **Zod** and **React Hook Form**. The form collects personal, address, and account details, and includes features like field-level validation, navigation between steps, and a final data review screen before submission.
 
+🚀 Live Demo: [FormFlow](https://multi-step-form-snowy-six.vercel.app/)
+
 ---
 
 ## 📑 Table of Contents
@@ -14,6 +16,7 @@ A front-end project built using **Next.js** and **React** that showcases a respo
 - [Configuration](#⚙️-configuration)
 - [Troubleshooting](#🐛-troubleshooting)
 - [Form Steps](#📝-form-steps)
+- [Live Demo & Repository](#live-demo)
 ---
 
 ## ✨ Features
@@ -160,6 +163,17 @@ npm run lint
 - **Username** – _required_, minimum **4 characters_
 - **Password** – _required_, minimum **6 characters_
 - **Confirm Password** – _must match password_
+
+---
+
+
+## 🌍 Live Demo & Repository
+
+### 🚀 Live URL
+   - Vercel: [FormFlow](https://multi-step-form-snowy-six.vercel.app/)
+   - Screen Recording Link: [FormFlow Walkthrough](https://drive.google.com/file/d/1Sz83rjkV5FG9rtAdAWx33ZLA6tR-6eTp/view?usp=sharing)
+
+🔗 GitHub Repository: [GitHub Link](https://github.com/Soraiya11-7/multi-step-form)
 
 ---
 

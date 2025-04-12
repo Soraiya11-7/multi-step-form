@@ -115,7 +115,7 @@ export default function MultiStepForm() {
   };
 
   return (
-    <div className=" text-gray-900  dark:text-white">
+    <div className=" text-gray-900  dark:text-white mb-6">
       <div className="container w-[90%] mx-auto ">
         {showWelcomeModal && (
           <WelcomeModal
